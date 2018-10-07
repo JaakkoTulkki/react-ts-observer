@@ -1,3 +1,5 @@
+import {DataProvider} from "./financialDataProvider";
+
 export interface Observer {
     update: (data: any) => void;
 }
@@ -37,14 +39,13 @@ export interface Subject {
     notifyObservers: () => void;
 }
 
+
 export class PriceApp {
-    constructor(private _screens: DataScreen[], private _providers: DataProvider[]) {
-        for(const provider of this._providers) {
-            const data = provider.getData();
-            for(const screen of this._screens) {
-                screen.update(data);
-                provider.addSubscriber(screen);
-            }
+    constructor(private _screens: DataScreen[], private _provider: DataProvider & Subject) {
+        const data = this._provider.getData();
+        for(const screen of this._screens) {
+            screen.update(data);
+            this._provider.addSubscriber(screen);
         }
     }
 
@@ -52,8 +53,4 @@ export class PriceApp {
         return this._screens;
     }
 
-}
-
-export interface DataProvider extends Subject{
-    getData: () => any;
 }
