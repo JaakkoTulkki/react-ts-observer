@@ -1,16 +1,13 @@
-import {Observer, Subject} from "./price-observer";
-
-export interface DataProvider {
-    getData: () => any;
-}
+import {DataProvider, Observer, Subject} from "./interfaces";
 
 export class FinancialDataProvider implements DataProvider, Subject {
     private observers: Observer[] = [];
 
-    constructor(private _providers: DataProvider[]=[new ShareFakeDataProvider(), new BondFakeDataProvider()]) {
+    constructor(private _providers: DataProvider[]=[new ShareFakeDataProvider(), new BondFakeDataProvider()],
+                private _updateIntervalMs: number=1500) {
         setInterval(() => {
             this.notifyObservers();
-        }, 1500)
+        }, this._updateIntervalMs)
     }
 
     public addSubscriber(subscriber: Observer) {

@@ -1,9 +1,7 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import {DataScreen} from "./price-observer/price-observer";
 import {FinancialDataProvider} from "./price-observer/financialDataProvider";
-
-const Hello: React.SFC = () => <div>hello world</div>;
+import {DataScreen} from "./price-observer/interfaces";
 
 interface DataScreenProps {
     dataProvider: FinancialDataProvider;
