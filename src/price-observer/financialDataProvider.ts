@@ -1,18 +1,21 @@
 import {DataProvider, Observer, Subject} from "./interfaces";
 
-export class FinancialDataProvider implements DataProvider, Subject {
+export class FinancialDataProvider implements Subject {
     private observers: Observer[] = [];
 
     constructor(private _providers: DataProvider[]=[new ShareFakeDataProvider(), new BondFakeDataProvider()],
                 private _updateIntervalMs: number=1500) {
-        setInterval(() => {
-            this.notifyObservers();
-        }, this._updateIntervalMs)
+        if (this._updateIntervalMs) {
+            setInterval(() => {
+                this.notifyObservers();
+            }, this._updateIntervalMs)
+        }
     }
 
     public addSubscriber(subscriber: Observer) {
         this.observers.push(subscriber);
     };
+
     public getData() {
         let data = {};
         for(const provider of this._providers) {
@@ -20,6 +23,7 @@ export class FinancialDataProvider implements DataProvider, Subject {
         }
         return data;
     };
+
     public notifyObservers() {
         const data = this.getData();
 

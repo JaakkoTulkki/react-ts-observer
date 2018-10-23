@@ -1,7 +1,6 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import {FinancialDataProvider} from "./price-observer/financialDataProvider";
-import {DataScreen} from "./price-observer/interfaces";
 
 interface DataScreenProps {
     dataProvider: FinancialDataProvider;
@@ -10,7 +9,7 @@ interface StockState {
     unilever: string;
 }
 
-class ReactStockScreen extends React.Component<DataScreenProps, StockState> implements DataScreen {
+class ReactStockScreen extends React.Component<DataScreenProps, StockState> {
     constructor(props: DataScreenProps) {
         super(props);
         props.dataProvider.addSubscriber(this);
@@ -34,7 +33,7 @@ interface BondState {
     usGov: string;
 }
 
-class ReactBondScreen extends React.Component<DataScreenProps, BondState> implements DataScreen {
+class ReactBondScreen extends React.Component<DataScreenProps, BondState> {
     constructor(props: DataScreenProps) {
         super(props);
         props.dataProvider.addSubscriber(this);
